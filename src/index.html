@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MacClean Custom</title>
+    <script type="module" src="/main.js" defer></script>
+  </head>
+
+  <body>
+    <div class="app-layout">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <div class="brand">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          <h2>MacClean</h2>
+        </div>
+        
+        <nav class="menu">
+          <button class="menu-item active" data-target="dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="9" rx="1"/>
+              <rect x="14" y="3" width="7" height="5" rx="1"/>
+              <rect x="14" y="12" width="7" height="9" rx="1"/>
+              <rect x="3" y="16" width="7" height="5" rx="1"/>
+            </svg>
+            Dashboard
+          </button>
+          
+          <button class="menu-item" data-target="processes">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3zM6 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3z"/>
+              <path d="M9 12h6"/>
+            </svg>
+            Processes
+          </button>
+          
+          <button class="menu-item" data-target="cleanup">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+            Disk Cleanup
+          </button>
+          
+          <button class="menu-item" data-target="large-files">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            Large Files
+          </button>
+        </nav>
+        
+        <div class="sidebar-footer">
+          <span class="version">v1.0.0</span>
+        </div>
+      </aside>
+
+      <!-- Main Content Window -->
+      <main class="content">
+        
+        <!-- DASHBOARD TAB -->
+        <section id="dashboard" class="tab-content active">
+          <header class="section-header">
+            <h1>System Status</h1>
+            <p>Real-time memory and CPU resource utilization monitoring</p>
+          </header>
+
+          <div class="metrics-grid">
+            <div class="metric-card glass">
+              <h3>Memory (RAM)</h3>
+              <div class="radial-progress-wrapper">
+                <svg class="radial-progress" viewBox="0 0 100 100">
+                  <circle class="bg" cx="50" cy="50" r="40"></circle>
+                  <circle class="progress" id="ram-progress-circle" cx="50" cy="50" r="40"></circle>
+                </svg>
+                <div class="radial-value" id="ram-value">0%</div>
+              </div>
+              <div class="metric-stats">
+                <span class="stat-label">Used:</span>
+                <span class="stat-val" id="ram-used">0 GB</span>
+                <span class="stat-divider">/</span>
+                <span class="stat-label">Total:</span>
+                <span class="stat-val" id="ram-total">0 GB</span>
+              </div>
+            </div>
+
+            <div class="metric-card glass">
+              <h3>CPU Load</h3>
+              <div class="radial-progress-wrapper">
+                <svg class="radial-progress" viewBox="0 0 100 100">
+                  <circle class="bg" cx="50" cy="50" r="40"></circle>
+                  <circle class="progress" id="cpu-progress-circle" cx="50" cy="50" r="40"></circle>
+                </svg>
+                <div class="radial-value" id="cpu-value">0%</div>
+              </div>
+              <div class="metric-stats">
+                <span class="stat-label">Processes:</span>
+                <span class="stat-val" id="process-count">0</span>
+                <span class="stat-divider">|</span>
+                <span class="stat-label">Zombies:</span>
+                <span class="stat-val warning" id="zombie-count">0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-actions glass">
+            <h3>Quick System Actions</h3>
+            <div class="actions-buttons">
+              <button class="btn btn-primary" id="btn-quick-scan">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                Run Quick Clean Scan
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- PROCESSES TAB -->
+        <section id="processes" class="tab-content">
+          <header class="section-header">
+            <h1>Active Processes</h1>
+            <p>Monitor RAM/CPU consumption and terminate unresponsive apps</p>
+          </header>
+
+          <div class="table-controls">
+            <div class="search-box">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="process-search" placeholder="Search processes by name or PID..." />
+            </div>
+            <div class="filter-actions">
+              <button class="btn btn-secondary" id="btn-refresh-processes">Refresh List</button>
+            </div>
+          </div>
+
+          <div class="table-container glass">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th class="sortable" data-sort="pid">PID</th>
+                  <th class="sortable" data-sort="name">Process Name</th>
+                  <th class="sortable" data-sort="cpu">CPU Usage</th>
+                  <th class="sortable" data-sort="memory">Memory</th>
+                  <th>Status</th>
+                  <th class="text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="processes-list">
+                <tr>
+                  <td colspan="6" class="text-center text-muted">Loading system processes...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- CLEANUP TAB -->
+        <section id="cleanup" class="tab-content">
+          <header class="section-header">
+            <h1>Disk Space Cleanup</h1>
+            <p>Analyze and clean up system logs, cache folders, and temp data</p>
+          </header>
+
+          <div class="cleanup-actions card-header-controls">
+            <button class="btn btn-secondary" id="btn-scan-garbage">Scan Cache & Trash</button>
+            <button class="btn btn-danger disabled" id="btn-clean-garbage" disabled>Clean Selected</button>
+          </div>
+
+          <div class="garbage-cards-container" id="garbage-folders-list">
+            <!-- Cards generated dynamically -->
+            <div class="glass empty-state">
+              <p>Click "Scan Cache & Trash" to analyze cleanable data</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- LARGE FILES TAB -->
+        <section id="large-files" class="tab-content">
+          <header class="section-header">
+            <h1>Large Files Finder</h1>
+            <p>Search and remove large space-consuming files in Documents and Downloads</p>
+          </header>
+
+          <div class="table-controls">
+            <div class="select-wrapper">
+              <label for="min-size-select">Minimum file size: </label>
+              <select id="min-size-select">
+                <option value="50">50 MB</option>
+                <option value="100" selected>100 MB</option>
+                <option value="500">500 MB</option>
+                <option value="1000">1 GB</option>
+              </select>
+            </div>
+            <button class="btn btn-secondary" id="btn-scan-large-files">Scan Directories</button>
+          </div>
+
+          <div class="table-container glass">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>File Name</th>
+                  <th>Path</th>
+                  <th class="sortable" data-sort="size">Size</th>
+                  <th class="text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="large-files-list">
+                <tr>
+                  <td colspan="4" class="text-center text-muted">Select size threshold and run Scan</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- Notification system -->
+    <div id="toast-container" class="toast-container"></div>
+  </body>
+</html>
